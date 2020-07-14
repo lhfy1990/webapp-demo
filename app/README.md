@@ -1,15 +1,10 @@
-# Web App Demo
-This project is a basic web application template, including front-end application with builder, back-end appliation with RESTful API, and a json database powered by lowdb. Front-end application is developed and hosted inside app folder. Back-end appliation is developed and structured in routers folder. Json database is hosted in db.json under root folder.
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app). Customized with integration of Bulma (pure css) and Fontawesome (free).
 
 ## Available Scripts
+
 In the project directory, you can run:
 
 ### `npm start`
-
-Runs the app in the production mode.<br />
-Open [http://localhost:8080](http://localhost:8080) to view it in the browser.
-
-### `npm run dev`
 
 Runs the app in the development mode.<br />
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
@@ -24,13 +19,23 @@ See the section about [running tests](https://facebook.github.io/create-react-ap
 
 ### `npm run build`
 
-Builds the app for production to the `app/build` folder.<br />
+Builds the app for production to the `build` folder.<br />
 It correctly bundles React in production mode and optimizes the build for the best performance.
 
 The build is minified and the filenames include the hashes.<br />
 Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+
+### `npm run eject`
+
+**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+
+If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+
+Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+
+You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
 ## Learn More
 
@@ -61,9 +66,3 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/de
 ### `npm run build` fails to minify
 
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
-
-## References
-* [REST API Tutorial](http://www.restapitutorial.com/)
-* [Using HTTP Methods for RESTful Services](http://www.restapitutorial.com/lessons/httpmethods.html)
-* [REST API Quick Tips](http://www.restapitutorial.com/lessons/restquicktips.html)
-* [Build a RESTful API Using Node and Express 4](https://scotch.io/tutorials/build-a-restful-api-using-node-and-express-4)
