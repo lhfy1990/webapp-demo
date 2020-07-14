@@ -16,9 +16,14 @@ router.route('/')
     // if (isNoAuthIntormation) 401 UNAUTHORIZED
     // if (isNoRights) 403 FORBIDDEN
     let objects = DB.objects.filter(query).value();
+    let packet = {
+      offset: 0,
+      count: objects.length,
+      data: objects
+    };
     let statusCode = 200; // 200 OK, no matter result is empty or not
     res.status(statusCode);
-    res.json(objects);
+    res.json(packet);
   })
   .post(function (req, res) {
     let body = req.body;
@@ -52,10 +57,11 @@ router.route('/')
 router.route('/:id')
   .get(function (req, res) {
     let id = req.params.id;
-    // if (id.isNotFound) 404 NOT FOUND
     // if (isNoAuthIntormation) 401 UNAUTHORIZED
     // if (isNoRights) 403 FORBIDDEN
     let object = DB.objects.find({ id: id }).value();
+    // 404 NOT FOUND
+    if (!object) { return res.status(404).end(); }
     let statusCode = 200; // 200 OK
     res.status(statusCode);
     res.json(object);
@@ -70,31 +76,41 @@ router.route('/:id')
     let id = req.params.id;
     let body = req.body;
     // if (body.isInvalid) 400 BAD REQUEST
-    // if (id.isNotFound) 404 NOT FOUND
     // if (isNoAuthIntormation) 401 UNAUTHORIZED
     // if (isNoRights) 403 FORBIDDEN
-    DB.objects.find({ id: id }).assign(body).write();
-    let statusCode = 204; // 204 NO CONTENT, indicating the object has been replaced by entire object.
+    let object = DB.objects.find({ id: id }).value();
+    // 404 NOT FOUND
+    if (!object) { return res.status(404).end(); }
+    body.id = id;
+    DB.objects.remove({ id: id}).write();
+    DB.objects.push(body).write();
+    object = DB.objects.find({ id: id }).value();
+    let statusCode = 200; // 200 OK, indicating the object has been replaced by entire object.
     res.status(statusCode);
-    res.json();
+    res.json(object);
   })
   .patch(function (req, res) {
     let id = req.params.id;
     let body = req.body;
     // if (body.isInvalid) 400 BAD REQUEST
-    // if (id.isNotFound) 404 NOT FOUND
     // if (isNoAuthIntormation) 401 UNAUTHORIZED
     // if (isNoRights) 403 FORBIDDEN
+    let object = DB.objects.find({ id: id }).value();
+    // 404 NOT FOUND
+    if (!object) { return res.status(404).end(); }
     DB.objects.find({ id: id }).assign(body).write();
-    let statusCode = 204; // 204 NO CONTENT, indicating the object has been modified on specific properties.
+    object = DB.objects.find({ id: id }).value();
+    let statusCode = 200; // 200 OK, indicating the object has been modified on specific properties.
     res.status(statusCode);
-    res.json();
+    res.json(object);
   })
   .delete(function (req, res) {
     let id = req.params.id;
-    // if (id.isNotFound) 404 NOT FOUND
     // if (isNoAuthIntormation) 401 UNAUTHORIZED
     // if (isNoRights) 403 FORBIDDEN
+    let object = DB.objects.find({ id: id }).value();
+    // 404 NOT FOUND
+    if (!object) { return res.status(404).end(); }
     DB.objects.remove({ id: id }).write();
     let statusCode = 204; // 204 NO CONTENT, indicating the object has been deleted.
     res.status(statusCode);
