@@ -82,7 +82,7 @@ router.route('/:id')
     // 404 NOT FOUND
     if (!object) { return res.status(404).end(); }
     body.id = id;
-    DB.objects.remove({ id: id}).write();
+    DB.objects.remove({ id: id }).write();
     DB.objects.push(body).write();
     object = DB.objects.find({ id: id }).value();
     let statusCode = 200; // 200 OK, indicating the object has been replaced by entire object.

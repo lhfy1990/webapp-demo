@@ -154,7 +154,7 @@ describe('Objects', function () {
     it('put one object by invalid id', done => {
       chai.request(baseUrl)
         .put(basePath + '/' + 'abc')
-        .send({status: status})
+        .send({ status: status })
         .end((err, res) => {
           if (err) { return done(err); }
           if (!res || !res.body) {
@@ -173,7 +173,7 @@ describe('Objects', function () {
     it('put one valid object', done => {
       chai.request(baseUrl)
         .put(basePath + '/' + id)
-        .send({status: status})
+        .send({ status: status })
         .end((err, res) => {
           if (err) { return done(err); }
           if (!res || !res.body) {
@@ -189,7 +189,7 @@ describe('Objects', function () {
           if (body.status !== status) {
             return done(new Error(`Response body is expected as updated object with status ${status}, but got status ${body.status}.`));
           }
-          let extraKey = Object.keys(body).find(elem=>!['id','status'].includes(elem));
+          let extraKey = Object.keys(body).find(elem => !['id', 'status'].includes(elem));
           if (extraKey) {
             return done(new Error(`Response body is expected as replaced object, but got extra key ${extraKey}.`));
           }
@@ -202,7 +202,7 @@ describe('Objects', function () {
     it('patch one object by invalid id', done => {
       chai.request(baseUrl)
         .patch(basePath + '/' + 'abc')
-        .send({desc: desc})
+        .send({ desc: desc })
         .end((err, res) => {
           if (err) { return done(err); }
           if (!res || !res.body) {
@@ -221,7 +221,7 @@ describe('Objects', function () {
     it('patch one valid object', done => {
       chai.request(baseUrl)
         .patch(basePath + '/' + id)
-        .send({desc: desc})
+        .send({ desc: desc })
         .end((err, res) => {
           if (err) { return done(err); }
           if (!res || !res.body) {
@@ -237,8 +237,42 @@ describe('Objects', function () {
           if (body.desc !== desc) {
             return done(new Error(`Response body is expected as updated object with desc ${desc}, but got desc ${body.desc}.`));
           }
-          if (Object.keys(body).every(elem=>['id','desc'].includes(elem))) {
+          if (Object.keys(body).every(elem => ['id', 'desc'].includes(elem))) {
             return done(new Error(`Response body is expected as updated object, but got only given key.`));
+          }
+          done();
+        });
+    });
+  });
+  describe('Delete one object by id', function () {
+    it('delete one object by invalid id', done => {
+      chai.request(baseUrl)
+        .delete(basePath + '/' + 'abc')
+        .end((err, res) => {
+          if (err) { return done(err); }
+          if (!res) {
+            return done(new Error('Response is expected but got none.'));
+          }
+          if (res.status !== 404) {
+            return done(new Error(`Response status code 404 expected but got ${res.status}.`));
+          }
+          done();
+        });
+    });
+    it('delete one object by invalid input', done => {
+      // our api does no have validation for it yet
+      done();
+    });
+    it('delete one valid object', done => {
+      chai.request(baseUrl)
+        .delete(basePath + '/' + id)
+        .end((err, res) => {
+          if (err) { return done(err); }
+          if (!res) {
+            return done(new Error('Response is expected but got none.'));
+          }
+          if (res.status !== 204) {
+            return done(new Error(`Response status code 204 expected but got ${res.status}.`));
           }
           done();
         });
